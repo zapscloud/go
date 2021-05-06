@@ -1,4 +1,4 @@
-module github.com/zapscloud/go
+module github.com/zapscloud/golib
 
 go 1.16
 

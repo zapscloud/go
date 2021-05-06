@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	database "github.com/zapscloud/zapsdatabase-go"
+	database "zapscloud/go/database"
 )
 
 func main() {

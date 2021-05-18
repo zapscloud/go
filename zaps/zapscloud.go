@@ -35,7 +35,7 @@ func (p *ZapsCloud) Stage() string {
 }
 
 func (p *ZapsCloud) SetTenant(tenant string) {
-	p.stage = tenant
+	p.tenant = tenant
 }
 
 func (p *ZapsCloud) Tenant() string {
@@ -57,7 +57,6 @@ func NewZapsCloud(authKey string, authSecret, application string) (*ZapsCloud, e
 // EndZapsCloud - Close all the ZapsCloud
 func (p *ZapsCloud) EndZapsCloud() {
 	log.Printf("EndZapsCloud ")
-	return
 }
 
 func (p *ZapsCloud) makeReqeust(method string, requestURL string, body io.Reader) (*http.Request, error) {

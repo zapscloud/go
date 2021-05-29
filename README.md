@@ -1,2 +1,2 @@
-# zapsdatabase-go
-Zapscloud  Package for GO
+# zapslib-go
+Zapscloud Library Package for GO

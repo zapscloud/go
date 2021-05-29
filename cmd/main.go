@@ -12,9 +12,10 @@ func init() {
 }
 
 func main() {
-	zapscloud, err := zaps.NewZapsCloud("key", "secret", "application")
+	zapscloud, err := zaps.NewZapsCloud("authkey", "authsecret", "application")
 	// zapscloud.SetStage("dev")
 
+	zapscloud.SetTenant("tenant")
 	// zapsdb, err := database.NewZapsDB(zapscloud)
 	// res, err := zapsdb.GetOne("student_class", "2", "")
 	// fmt.Println("Result values ", res, err)
@@ -82,10 +83,13 @@ func main() {
 	// fmt.Println("Tenant Detail :: ", string(resjson), err)
 
 	zapsauth, err := auth.NewZapsAuth(zapscloud)
+	fmt.Println("Client Auth :: ", err)
 
-	// res, err := zapsauth.GetClientList("", "", 0, 0)
-	// resjson, err := json.MarshalIndent(res, "", "  ")
-	// fmt.Println("Client List :: ", string(resjson), err)
+	res, err := zapsauth.GetClientList("", "", 0, 0)
+	fmt.Println("Client List :: ", err)
+
+	resjson, err := json.MarshalIndent(res, "", "  ")
+	fmt.Println("Client List JSON:: ", string(resjson), err)
 
 	// res, err = zapsauth.GetClient("book001")
 	// resjson, err = json.MarshalIndent(res, "", "  ")
@@ -147,8 +151,8 @@ func main() {
 	// resjson, err := json.MarshalIndent(res, "", "  ")
 	// fmt.Println("Client detail :: ", string(resjson), err)
 
-	res, err := zapsauth.ValidateToken("fde2d7eb665200b9a39b34106c815d7beef778d01")
-	resjson, _ := json.MarshalIndent(res, "", "  ")
-	fmt.Println("Client detail :: ", string(resjson), err)
+	// res, err := zapsauth.ValidateToken("fde2d7eb665200b9a39b34106c815d7beef778d01")
+	// resjson, _ := json.MarshalIndent(res, "", "  ")
+	// fmt.Println("Client detail :: ", string(resjson), err)
 
 }

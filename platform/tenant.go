@@ -10,7 +10,7 @@ func init() {
 }
 
 // FindByCode - Find By Code
-func (p *ZapsApp) GetTenantList(filterquery string, sortquery string, skip int64, limit int64) (map[string]interface{}, error) {
+func (p *ZapsPlatform) GetTenantList(filterquery string, sortquery string, skip int64, limit int64) (map[string]interface{}, error) {
 	log.Println("GetTenantList::  Begin ", filterquery)
 
 	queryparam := ""
@@ -54,7 +54,7 @@ func (p *ZapsApp) GetTenantList(filterquery string, sortquery string, skip int64
 }
 
 // GetOne - Get Single Record
-func (p *ZapsApp) GetTenant(tenantid string) (map[string]interface{}, error) {
+func (p *ZapsPlatform) GetTenant(tenantid string) (map[string]interface{}, error) {
 	log.Println("GetOne::  Begin ", tenantid)
 
 	requestURL := fmt.Sprintf("/tenants/%s", tenantid)
@@ -70,10 +70,10 @@ func (p *ZapsApp) GetTenant(tenantid string) (map[string]interface{}, error) {
 }
 
 // CreateTenant - Create collection
-func (p *ZapsApp) CreateTenant(tenantid, tenantname, tenantregion string) (map[string]interface{}, error) {
+func (p *ZapsPlatform) CreateTenant(tenantid, tenantname, tenantregion string) (map[string]interface{}, error) {
 	log.Println("GetOne::  Begin ", tenantname)
 
-	requestURL := fmt.Sprintf("/tenants")
+	requestURL := "/tenants"
 
 	log.Println("Get one ", requestURL)
 
@@ -92,7 +92,7 @@ func (p *ZapsApp) CreateTenant(tenantid, tenantname, tenantregion string) (map[s
 }
 
 // DeleteOne - Delete Key Record
-func (p *ZapsApp) RemoveTenant(tenantid string) (map[string]interface{}, error) {
+func (p *ZapsPlatform) RemoveTenant(tenantid string) (map[string]interface{}, error) {
 	log.Println("UpdateOne::  Begin ", tenantid)
 
 	requestURL := fmt.Sprintf("/tenants/%s", tenantid)

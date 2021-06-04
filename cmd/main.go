@@ -1,10 +1,9 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 
-	auth "github.com/zapscloud/golib/auth"
+	"github.com/zapscloud/golib/database"
 	zaps "github.com/zapscloud/golib/zaps"
 )
 
@@ -12,21 +11,21 @@ func init() {
 }
 
 func main() {
-	zapscloud, err := zaps.NewZapsCloud("authkey", "authsecret", "application")
-	// zapscloud.SetStage("dev")
+	zapscloud, err := zaps.NewZapsCloud("demoapp", "demosecret", "demoapp")
+	zapscloud.SetStage("dev")
 
-	zapscloud.SetTenant("tenant")
-	// zapsdb, err := database.NewZapsDB(zapscloud)
-	// res, err := zapsdb.GetOne("student_class", "2", "")
-	// fmt.Println("Result values ", res, err)
+	// zapscloud.SetTenant("tenant")
+	zapsdb, err := database.NewZapsDB(zapscloud)
+	res, err := zapsdb.GetOne("student_class", "2", "")
+	fmt.Println("Result values ", res, err)
 
-	// reqbody := []byte(`{
-	// 	"class_id": 32,
-	// 	"class_name": "class II32",
-	// 	"class_total":32
-	// }`)
-	// res, err = zapsdb.Insert("student_class", reqbody)
-	// fmt.Println("Insert response ", res, err)
+	reqbody := map[string]interface{}{
+		"class_id":    34,
+		"class_name":  "class II34",
+		"class_total": 34,
+	}
+	res, err = zapsdb.Insert("student_class", reqbody)
+	fmt.Println("Insert response ", res, err)
 
 	// reqbody = []byte(`{
 	// 	"class_id": 2,
@@ -42,9 +41,9 @@ func main() {
 	// res, err = zapsdb.UpdateMany("student_class", filter, reqbody)
 	// fmt.Println("Update response ", res, err)
 
-	// filter := `{"class_total":{"$gte":30}}`
-	// res, err = zapsdb.GetMany("student_class", filter, "", 0, 0)
-	// fmt.Println("Result values ", res, err)
+	filter := `{"class_total":{"$gte":30}}`
+	res, err = zapsdb.GetMany("student_class", filter, "", 0, 0)
+	fmt.Println("Result values ", res, err)
 
 	// aggvalue := `{"_id":{"student_class":"student_class"},  "count":{"$sum":1}}`
 
@@ -82,14 +81,14 @@ func main() {
 	// resjson, err = json.MarshalIndent(res, "", "  ")
 	// fmt.Println("Tenant Detail :: ", string(resjson), err)
 
-	zapsauth, err := auth.NewZapsAuth(zapscloud)
-	fmt.Println("Client Auth :: ", err)
+	// zapsauth, err := auth.NewZapsAuth(zapscloud)
+	// fmt.Println("Client Auth :: ", err)
 
-	res, err := zapsauth.GetClientList("", "", 0, 0)
-	fmt.Println("Client List :: ", err)
+	// res, err = zapsauth.GetClientList("", "", 0, 0)
+	// fmt.Println("Client List :: ", err)
 
-	resjson, err := json.MarshalIndent(res, "", "  ")
-	fmt.Println("Client List JSON:: ", string(resjson), err)
+	// resjson, err := json.MarshalIndent(res, "", "  ")
+	// fmt.Println("Client List JSON:: ", string(resjson), err)
 
 	// res, err = zapsauth.GetClient("book001")
 	// resjson, err = json.MarshalIndent(res, "", "  ")

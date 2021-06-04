@@ -47,7 +47,7 @@ func (p *ZapsAuth) HttpGet(requrl string) (map[string]interface{}, error) {
 }
 
 // HttpGet - HTTP Get Request
-func (p *ZapsAuth) HttpPost(requrl string, body map[string]interface{}) (map[string]interface{}, error) {
+func (p *ZapsAuth) HttpPost(requrl string, body interface{}) (map[string]interface{}, error) {
 
 	log.Println("ZapsAuth:HttpPost::  Begin ", requrl)
 
@@ -60,7 +60,7 @@ func (p *ZapsAuth) HttpPost(requrl string, body map[string]interface{}) (map[str
 }
 
 // HttpPut - HTTP Put Request
-func (p *ZapsAuth) HttpPut(requrl string, body map[string]interface{}) (map[string]interface{}, error) {
+func (p *ZapsAuth) HttpPut(requrl string, body interface{}) (map[string]interface{}, error) {
 
 	log.Println("ZapsAuth:HttpPut::  Begin ", requrl)
 

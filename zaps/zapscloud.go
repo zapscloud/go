@@ -119,7 +119,7 @@ func (p *ZapsCloud) HttpGet(requrl string) (map[string]interface{}, error) {
 }
 
 // HttpGet - HTTP Get Request
-func (p *ZapsCloud) HttpPost(requrl string, body map[string]interface{}) (map[string]interface{}, error) {
+func (p *ZapsCloud) HttpPost(requrl string, body interface{}) (map[string]interface{}, error) {
 
 	log.Println("HttpPost::  Begin ", requrl)
 
@@ -168,7 +168,7 @@ func (p *ZapsCloud) HttpPost(requrl string, body map[string]interface{}) (map[st
 }
 
 // HttpPut - HTTP Put Request
-func (p *ZapsCloud) HttpPut(requrl string, body map[string]interface{}) (map[string]interface{}, error) {
+func (p *ZapsCloud) HttpPut(requrl string, body interface{}) (map[string]interface{}, error) {
 
 	log.Println("HttpPut::  Begin ", requrl)
 	jsonstring, err := json.Marshal(body)

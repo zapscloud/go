@@ -73,7 +73,7 @@ func (p *ZapsAuth) GetUser(tenantid string) (map[string]interface{}, error) {
 }
 
 // CreateUser - Create new user
-func (p *ZapsAuth) CreateUser(reqbody map[string]interface{}) (map[string]interface{}, error) {
+func (p *ZapsAuth) CreateUser(reqbody interface{}) (map[string]interface{}, error) {
 	log.Println("Auth::CreateUser:  Begin ")
 
 	requestURL := "/users"
@@ -88,7 +88,7 @@ func (p *ZapsAuth) CreateUser(reqbody map[string]interface{}) (map[string]interf
 }
 
 // UpdateUser - Update user
-func (p *ZapsAuth) UpdateUser(userid string, reqbody map[string]interface{}) (map[string]interface{}, error) {
+func (p *ZapsAuth) UpdateUser(userid string, reqbody interface{}) (map[string]interface{}, error) {
 	log.Println("Auth::UpdateUser:  Begin ", userid)
 
 	requestURL := fmt.Sprintf("/users/%s", userid)
@@ -142,7 +142,7 @@ func (p *ZapsAuth) ValidateUser(userid, usersecret string) (map[string]interface
 }
 
 // ValidateUser - Validate user
-func (p *ZapsAuth) ResetPassword(reqbody map[string]interface{}) (map[string]interface{}, error) {
+func (p *ZapsAuth) ResetPassword(reqbody interface{}) (map[string]interface{}, error) {
 	log.Println("Auth::ValidateUser:  Begin ")
 
 	requestURL := "/users/secret"

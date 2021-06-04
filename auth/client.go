@@ -72,7 +72,7 @@ func (p *ZapsAuth) GetClient(clientid string) (map[string]interface{}, error) {
 }
 
 // CreateClient - Create collection
-func (p *ZapsAuth) CreateClient(reqbody map[string]interface{}) (map[string]interface{}, error) {
+func (p *ZapsAuth) CreateClient(reqbody interface{}) (map[string]interface{}, error) {
 	log.Println("Auth::CreateClient:  Begin ")
 
 	requestURL := "/clients"

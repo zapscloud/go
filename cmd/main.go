@@ -2,27 +2,32 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/zapscloud/golib/database"
-	zaps "github.com/zapscloud/golib/zaps"
+	"github.com/zapscloud/golib/zaps"
 )
 
 func init() {
 }
 
 func main() {
-	zapscloud, err := zaps.NewZapsCloud("demoapp", "demosecret", "demoapp")
+	zapscloud, err := zaps.NewZapsCloud("demoapp2024", "5dolm8zjzi", "demoapp2024")
 	zapscloud.SetStage("dev")
+
+	log.Println("Error ", err)
 
 	// zapscloud.SetTenant("tenant")
 	zapsdb, err := database.NewZapsDB(zapscloud)
-	res, err := zapsdb.GetOne("student_class", "2", "")
+	log.Println("Error ", err)
+
+	res, err := zapsdb.GetOne("student_class", "34", "")
 	fmt.Println("Result values ", res, err)
 
 	reqbody := map[string]interface{}{
-		"class_id":    34,
+		"class_id":    35,
 		"class_name":  "class II34",
-		"class_total": 34,
+		"class_total": 35,
 	}
 	res, err = zapsdb.Insert("student_class", reqbody)
 	fmt.Println("Insert response ", res, err)

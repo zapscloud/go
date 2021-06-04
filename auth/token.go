@@ -9,7 +9,7 @@ func init() {
 }
 
 // AccessToken - Access Token
-func (p *ZapsAuth) AccessToken(reqbody map[string]interface{}) (map[string]interface{}, error) {
+func (p *ZapsAuth) AccessToken(reqbody interface{}) (map[string]interface{}, error) {
 	log.Println("Auth::AccessToken::  Begin ")
 
 	requestURL := "/token"

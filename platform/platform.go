@@ -47,7 +47,7 @@ func (p *ZapsPlatform) HttpGet(requrl string) (map[string]interface{}, error) {
 }
 
 // HttpGet - HTTP Get Request
-func (p *ZapsPlatform) HttpPost(requrl string, body []byte) (map[string]interface{}, error) {
+func (p *ZapsPlatform) HttpPost(requrl string, body map[string]interface{}) (map[string]interface{}, error) {
 
 	log.Println("ZapsPlatform:HttpPost::  Begin ", requrl)
 
@@ -60,7 +60,7 @@ func (p *ZapsPlatform) HttpPost(requrl string, body []byte) (map[string]interfac
 }
 
 // HttpPut - HTTP Put Request
-func (p *ZapsPlatform) HttpPut(requrl string, body []byte) (map[string]interface{}, error) {
+func (p *ZapsPlatform) HttpPut(requrl string, body map[string]interface{}) (map[string]interface{}, error) {
 
 	log.Println("ZapsPlatform:HttpPut::  Begin ", requrl)
 

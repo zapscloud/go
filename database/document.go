@@ -77,7 +77,7 @@ func (p *ZapsDB) GetOne(collectionname string, collectionkey string, lookups str
 }
 
 // Insert - Insert Single Record
-func (p *ZapsDB) Insert(collectionname string, body []byte) (map[string]interface{}, error) {
+func (p *ZapsDB) Insert(collectionname string, body map[string]interface{}) (map[string]interface{}, error) {
 	log.Println("GetOne::  Begin ", collectionname)
 
 	requestURL := fmt.Sprintf("/documents/%s", collectionname)
@@ -93,7 +93,7 @@ func (p *ZapsDB) Insert(collectionname string, body []byte) (map[string]interfac
 }
 
 // UpdateOne - Update Key Record
-func (p *ZapsDB) UpdateOne(collectionname string, collectionkey string, body []byte) (map[string]interface{}, error) {
+func (p *ZapsDB) UpdateOne(collectionname string, collectionkey string, body map[string]interface{}) (map[string]interface{}, error) {
 	log.Println("UpdateOne::  Begin ", collectionname)
 
 	requestURL := fmt.Sprintf("/documents/%s/%s", collectionname, collectionkey)
@@ -109,7 +109,7 @@ func (p *ZapsDB) UpdateOne(collectionname string, collectionkey string, body []b
 }
 
 // Update - Update Record
-func (p *ZapsDB) UpdateMany(collectionname string, filterquery string, body []byte) (map[string]interface{}, error) {
+func (p *ZapsDB) UpdateMany(collectionname string, filterquery string, body map[string]interface{}) (map[string]interface{}, error) {
 	log.Println("GetOne::  Begin ", collectionname)
 
 	queryparam := ""

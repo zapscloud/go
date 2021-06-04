@@ -77,11 +77,11 @@ func (p *ZapsPlatform) CreateTenant(tenantid, tenantname, tenantregion string) (
 
 	log.Println("Get one ", requestURL)
 
-	reqbody := []byte(`{
-		"tenant_id": "` + tenantid + `",
-		"tenant_name": "` + tenantname + `",
-		"tenant_region": "` + tenantregion + `"
-	}`)
+	reqbody := map[string]interface{}{
+		"tenant_id":     tenantid,
+		"tenant_name":   tenantname,
+		"tenant_region": tenantregion,
+	}
 
 	responseData, err := p.HttpPost(requestURL, reqbody)
 	if err != nil {

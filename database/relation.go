@@ -77,11 +77,11 @@ func (p *ZapsDB) CreateRelation(collectionname string, fieldname string, foreign
 
 	log.Println("Get one ", requestURL)
 
-	reqbody := []byte(`{
-		"fieldname": "` + fieldname + `",
-		"foreign_collection": "` + foreign_collection + `",
-		"foreign_key": "` + foreign_key + `"
-	}`)
+	reqbody := map[string]interface{}{
+		"fieldname":          fieldname,
+		"foreign_collection": foreign_collection,
+		"foreign_key":        foreign_key,
+	}
 
 	responseData, err := p.HttpPost(requestURL, reqbody)
 	if err != nil {

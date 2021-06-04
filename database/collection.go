@@ -73,16 +73,15 @@ func (p *ZapsDB) GetCollection(collectionname string) (map[string]interface{}, e
 func (p *ZapsDB) CreateCollection(collectionname string, collectionkey string, description string) (map[string]interface{}, error) {
 	log.Println("GetOne::  Begin ", collectionname)
 
-	requestURL := fmt.Sprintf("/collections")
+	requestURL := "/collections"
 
 	log.Println("Get one ", requestURL)
 
-	reqbody := []byte(`{
-		"collection_id": "` + collectionname + `",
-		"collection_name": "` + description + `",
-		"collection_key": "` + collectionkey + `"
-	}`)
-
+	reqbody := map[string]interface{}{
+		"collection_id":   collectionname,
+		"collection_name": description,
+		"collection_key":  collectionkey,
+	}
 	responseData, err := p.HttpPost(requestURL, reqbody)
 	if err != nil {
 		return nil, err

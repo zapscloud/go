@@ -119,12 +119,16 @@ func (p *ZapsCloud) HttpGet(requrl string) (map[string]interface{}, error) {
 }
 
 // HttpGet - HTTP Get Request
-func (p *ZapsCloud) HttpPost(requrl string, body []byte) (map[string]interface{}, error) {
+func (p *ZapsCloud) HttpPost(requrl string, body map[string]interface{}) (map[string]interface{}, error) {
 
 	log.Println("HttpPost::  Begin ", requrl)
-	var jsonstring = []byte(body)
+
+	jsonstring, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
 	bodydata := bytes.NewBuffer(jsonstring)
-	log.Println("HttpPost:: Body", requrl, bytes.NewBuffer(jsonstring))
+	log.Println("HttpPost:: Body", requrl, bodydata)
 
 	req, err := p.makeReqeust("POST", requrl, bodydata)
 	if err != nil {
@@ -164,12 +168,15 @@ func (p *ZapsCloud) HttpPost(requrl string, body []byte) (map[string]interface{}
 }
 
 // HttpPut - HTTP Put Request
-func (p *ZapsCloud) HttpPut(requrl string, body []byte) (map[string]interface{}, error) {
+func (p *ZapsCloud) HttpPut(requrl string, body map[string]interface{}) (map[string]interface{}, error) {
 
 	log.Println("HttpPut::  Begin ", requrl)
-	var jsonstring = []byte(body)
+	jsonstring, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
 	bodydata := bytes.NewBuffer(jsonstring)
-	log.Println("HttpPut:: Body", requrl, bytes.NewBuffer(jsonstring))
+	log.Println("HttpPost:: Body", requrl, bodydata)
 
 	req, err := p.makeReqeust("PUT", requrl, bodydata)
 	if err != nil {

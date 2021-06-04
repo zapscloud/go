@@ -72,10 +72,10 @@ func (p *ZapsAuth) GetClient(clientid string) (map[string]interface{}, error) {
 }
 
 // CreateClient - Create collection
-func (p *ZapsAuth) CreateClient(reqbody []byte) (map[string]interface{}, error) {
+func (p *ZapsAuth) CreateClient(reqbody map[string]interface{}) (map[string]interface{}, error) {
 	log.Println("Auth::CreateClient:  Begin ")
 
-	requestURL := fmt.Sprintf("/clients")
+	requestURL := "/clients"
 
 	log.Println("Get one ", requestURL)
 	responseData, err := p.HttpPost(requestURL, reqbody)
@@ -108,13 +108,13 @@ func (p *ZapsAuth) RemoveClient(clientid string) (map[string]interface{}, error)
 func (p *ZapsAuth) ValidateClient(clientkey, clientsecret string) (map[string]interface{}, error) {
 	log.Println("Auth::ValidateClient:  Begin ", clientkey)
 
-	requestURL := fmt.Sprintf("/clients/validate")
+	requestURL := "/clients/validate"
 	log.Println("Get one ", requestURL)
 
-	reqbody := []byte(`{
-		"client_key": "` + clientkey + `",
-		"client_secret": "` + clientsecret + `"
-	}`)
+	reqbody := map[string]interface{}{
+		"client_key":    clientkey,
+		"client_secret": clientsecret,
+	}
 
 	responseData, err := p.HttpPost(requestURL, reqbody)
 	if err != nil {

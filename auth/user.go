@@ -73,10 +73,10 @@ func (p *ZapsAuth) GetUser(tenantid string) (map[string]interface{}, error) {
 }
 
 // CreateUser - Create new user
-func (p *ZapsAuth) CreateUser(reqbody []byte) (map[string]interface{}, error) {
+func (p *ZapsAuth) CreateUser(reqbody map[string]interface{}) (map[string]interface{}, error) {
 	log.Println("Auth::CreateUser:  Begin ")
 
-	requestURL := fmt.Sprintf("/users")
+	requestURL := "/users"
 
 	log.Println("Get one ", requestURL)
 	responseData, err := p.HttpPost(requestURL, reqbody)
@@ -88,7 +88,7 @@ func (p *ZapsAuth) CreateUser(reqbody []byte) (map[string]interface{}, error) {
 }
 
 // UpdateUser - Update user
-func (p *ZapsAuth) UpdateUser(userid string, reqbody []byte) (map[string]interface{}, error) {
+func (p *ZapsAuth) UpdateUser(userid string, reqbody map[string]interface{}) (map[string]interface{}, error) {
 	log.Println("Auth::UpdateUser:  Begin ", userid)
 
 	requestURL := fmt.Sprintf("/users/%s", userid)
@@ -124,13 +124,13 @@ func (p *ZapsAuth) RemoveUser(tenantid string) (map[string]interface{}, error) {
 func (p *ZapsAuth) ValidateUser(userid, usersecret string) (map[string]interface{}, error) {
 	log.Println("Auth::ValidateUser:  Begin ", userid)
 
-	requestURL := fmt.Sprintf("/users/validate")
+	requestURL := "/users/validate"
 	log.Println("Get one ", requestURL)
 
-	reqbody := []byte(`{
-		"user_id": "` + userid + `",
-		"user_secret": "` + usersecret + `"
-	}`)
+	reqbody := map[string]interface{}{
+		"user_id":     userid,
+		"user_secret": usersecret,
+	}
 
 	responseData, err := p.HttpPost(requestURL, reqbody)
 	if err != nil {
@@ -142,10 +142,10 @@ func (p *ZapsAuth) ValidateUser(userid, usersecret string) (map[string]interface
 }
 
 // ValidateUser - Validate user
-func (p *ZapsAuth) ResetPassword(reqbody []byte) (map[string]interface{}, error) {
+func (p *ZapsAuth) ResetPassword(reqbody map[string]interface{}) (map[string]interface{}, error) {
 	log.Println("Auth::ValidateUser:  Begin ")
 
-	requestURL := fmt.Sprintf("/users/secret")
+	requestURL := "/users/secret"
 	log.Println("Get one ", requestURL)
 
 	responseData, err := p.HttpPut(requestURL, reqbody)

@@ -76,6 +76,35 @@ func (p *ZapsDB) GetOne(collectionname string, collectionkey string, lookups str
 	return responseData, err
 }
 
+// GetOne - Get Single Record
+func (p *ZapsDB) FindOne(collectionname string, filterquery string, lookups string) (map[string]interface{}, error) {
+	log.Println("FindOne::  Begin ", collectionname, filterquery, lookups)
+
+	queryparam := ""
+	if filterquery != "" {
+		queryparam = "?filter=" + url.QueryEscape(filterquery)
+	}
+
+	if lookups != "" {
+		if queryparam != "" {
+			queryparam = fmt.Sprintf("%s&lookup=%s", queryparam, url.QueryEscape(lookups))
+		} else {
+			queryparam = fmt.Sprintf("?lookup=%s", url.QueryEscape(lookups))
+		}
+	}
+
+	requestURL := fmt.Sprintf("/documents/%s/findone%s", collectionname, queryparam)
+
+	log.Println("Get one ", requestURL)
+
+	responseData, err := p.HttpGet(requestURL)
+	if err != nil {
+		return nil, err
+	}
+
+	return responseData, err
+}
+
 // Insert - Insert Single Record
 func (p *ZapsDB) Insert(collectionname string, body interface{}) (map[string]interface{}, error) {
 	log.Println("InsertOne::  Begin ", collectionname)

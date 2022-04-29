@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/kr/pretty"
 	"github.com/zapscloud/golib/database"
 	"github.com/zapscloud/golib/zaps"
 )
@@ -22,22 +23,32 @@ func main() {
 	log.Println("Error ", err)
 
 	res, err := zapsdb.GetOne("student_class", "34", "")
-	fmt.Println("Result values ", res, err)
+	fmt.Println("Result values ", err)
+	pretty.Println(res)
+
+	txnid := ""
+
+	// txndata, err := zapsdb.StartTransaction()
+	// fmt.Println("Txn  Result ", err)
+	// pretty.Println(txndata)
+
+	// txnid = txndata["transaction_id"].(string)
 
 	reqbody := map[string]interface{}{
-		"class_id":    35,
-		"class_name":  "class II34",
-		"class_total": 35,
+		"class_id":    41,
+		"class_name":  "class II41",
+		"class_total": 41,
 	}
-	res, err = zapsdb.Insert("student_class", reqbody)
+
+	res, err = zapsdb.Insert("student_class", reqbody, txnid)
 	fmt.Println("Insert response ", res, err)
 
-	// reqbody = []byte(`{
-	// 	"class_id": 2,
-	// 	"class_name": "class II updated"
-	// }`)
-	// res, err = zapsdb.UpdateOne("student_class", "2", reqbody)
-	// fmt.Println("Update response ", res, err)
+	reqbody = map[string]interface{}{
+		"class_id":   41,
+		"class_name": "class II 41 updated",
+	}
+	res, err = zapsdb.UpdateOne("student_class", "41", reqbody, txnid)
+	fmt.Println("Update response ", res, err)
 
 	// reqbody = []byte(`{
 	// 	"class_name": "class VI updated"
@@ -46,21 +57,36 @@ func main() {
 	// res, err = zapsdb.UpdateMany("student_class", filter, reqbody)
 	// fmt.Println("Update response ", res, err)
 
-	filter := `{"class_total":{"$gte":30}}`
-	res, err = zapsdb.GetMany("student_class", filter, "", 0, 0)
-	fmt.Println("Result values ", res, err)
+	// filter := `{"class_total":{"$gte":30}}`
+	// res, err = zapsdb.GetMany("student_class", filter, "", 0, 0)
+	// fmt.Println("Result values ", err)
+
+	// pretty.Println(res)
 
 	// aggvalue := `{"_id":{"student_class":"student_class"},  "count":{"$sum":1}}`
 
 	// res, err = zapsdb.Aggregate("student_class", "", aggvalue, "", 0, 0)
 	// fmt.Println("Result values ", res, err)
 
-	// res, err = zapsdb.DeleteOne("student_class", "21")
+	// res, err = zapsdb.DeleteOne("student_class", "38", txnid)
 	// fmt.Println("Delete response ", res, err)
 
-	// filter := `{"class_total":{"$gte":30}}`
-	// res, err = zapsdb.DeleteMany("student_class", filter)
+	// filter := `{"class_total":{"$gte":40}}`
+	// res, err = zapsdb.DeleteMany("student_class", filter, txnid)
 	// fmt.Println("Delete response ", res, err)
+
+	// duration := time.Duration(10) * time.Second
+	// time.Sleep(duration)
+
+	// if err != nil {
+	// 	txndata, err = zapsdb.RollbackTransaction(txnid)
+	// 	fmt.Println("Txn  Result ", err)
+	// 	pretty.Println(txndata)
+	// } else {
+	// 	txndata, err = zapsdb.CommitTransaction(txnid)
+	// 	fmt.Println("Txn  Result ", err)
+	// 	pretty.Println(txndata)
+	// }
 
 	// res, err := zapsdb.CreateCollection("testcollection", "id", "This is test collection using go lang")
 	// fmt.Println("Collection ", res, err)

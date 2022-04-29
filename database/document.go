@@ -106,10 +106,15 @@ func (p *ZapsDB) FindOne(collectionname string, filterquery string, lookups stri
 }
 
 // Insert - Insert Single Record
-func (p *ZapsDB) Insert(collectionname string, body interface{}) (map[string]interface{}, error) {
+func (p *ZapsDB) Insert(collectionname string, body interface{}, transaction string) (map[string]interface{}, error) {
 	log.Println("InsertOne::  Begin ", collectionname)
 
-	requestURL := fmt.Sprintf("/documents/%s", collectionname)
+	txnid := ""
+	if transaction != "" {
+		txnid = fmt.Sprintf("?zapstxn=%s", transaction)
+	}
+
+	requestURL := fmt.Sprintf("/documents/%s%s", collectionname, txnid)
 
 	log.Println("Insert one ", requestURL)
 
@@ -122,10 +127,15 @@ func (p *ZapsDB) Insert(collectionname string, body interface{}) (map[string]int
 }
 
 // UpdateOne - Update Key Record
-func (p *ZapsDB) UpdateOne(collectionname string, collectionkey string, body interface{}) (map[string]interface{}, error) {
+func (p *ZapsDB) UpdateOne(collectionname string, collectionkey string, body interface{}, transaction string) (map[string]interface{}, error) {
 	log.Println("UpdateOne::  Begin ", collectionname)
 
-	requestURL := fmt.Sprintf("/documents/%s/%s", collectionname, collectionkey)
+	txnid := ""
+	if transaction != "" {
+		txnid = fmt.Sprintf("?zapstxn=%s", transaction)
+	}
+
+	requestURL := fmt.Sprintf("/documents/%s/%s%s", collectionname, collectionkey, txnid)
 
 	log.Println("Get one ", requestURL)
 
@@ -138,12 +148,23 @@ func (p *ZapsDB) UpdateOne(collectionname string, collectionkey string, body int
 }
 
 // Update - Update Record
-func (p *ZapsDB) UpdateMany(collectionname string, filterquery string, body interface{}) (map[string]interface{}, error) {
+func (p *ZapsDB) UpdateMany(collectionname string, filterquery string, body interface{}, transaction string) (map[string]interface{}, error) {
 	log.Println("GetOne::  Begin ", collectionname)
 
+	txnid := ""
+	if transaction != "" {
+		txnid = fmt.Sprintf("?zapstxn=%s", transaction)
+	}
+
 	queryparam := ""
-	if filterquery != "" {
-		queryparam = "?filter=" + filterquery
+	if txnid != "" {
+		if filterquery != "" {
+			queryparam = txnid + "&filter=" + url.QueryEscape(filterquery)
+		}
+	} else {
+		if filterquery != "" {
+			queryparam = "?filter=" + url.QueryEscape(filterquery)
+		}
 	}
 
 	requestURL := fmt.Sprintf("/documents/%s%s", collectionname, queryparam)
@@ -159,10 +180,15 @@ func (p *ZapsDB) UpdateMany(collectionname string, filterquery string, body inte
 }
 
 // DeleteOne - Delete Key Record
-func (p *ZapsDB) DeleteOne(collectionname string, collectionkey string) (map[string]interface{}, error) {
+func (p *ZapsDB) DeleteOne(collectionname string, collectionkey string, transaction string) (map[string]interface{}, error) {
 	log.Println("UpdateOne::  Begin ", collectionname)
 
-	requestURL := fmt.Sprintf("/documents/%s/%s", collectionname, collectionkey)
+	txnid := ""
+	if transaction != "" {
+		txnid = fmt.Sprintf("?zapstxn=%s", transaction)
+	}
+
+	requestURL := fmt.Sprintf("/documents/%s/%s%s", collectionname, collectionkey, txnid)
 
 	log.Println("Get one ", requestURL)
 
@@ -175,12 +201,23 @@ func (p *ZapsDB) DeleteOne(collectionname string, collectionkey string) (map[str
 }
 
 // DeleteMany - Delete Many Records
-func (p *ZapsDB) DeleteMany(collectionname string, filterquery string) (map[string]interface{}, error) {
+func (p *ZapsDB) DeleteMany(collectionname string, filterquery string, transaction string) (map[string]interface{}, error) {
 	log.Println("GetOne::  Begin ", collectionname)
 
+	txnid := ""
+	if transaction != "" {
+		txnid = fmt.Sprintf("?zapstxn=%s", transaction)
+	}
+
 	queryparam := ""
-	if filterquery != "" {
-		queryparam = "?filter=" + url.QueryEscape(filterquery)
+	if txnid != "" {
+		if filterquery != "" {
+			queryparam = txnid + "&filter=" + url.QueryEscape(filterquery)
+		}
+	} else {
+		if filterquery != "" {
+			queryparam = "?filter=" + url.QueryEscape(filterquery)
+		}
 	}
 
 	requestURL := fmt.Sprintf("/documents/%s%s", collectionname, queryparam)

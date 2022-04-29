@@ -13,7 +13,7 @@ func init() {
 }
 
 func main() {
-	zapscloud, err := zaps.NewZapsCloud("applicationname", "key", "password")
+	zapscloud, err := zaps.NewZapsCloud("applicationname", "key", "secret")
 	zapscloud.SetStage("dev")
 
 	log.Println("Error ", err)
